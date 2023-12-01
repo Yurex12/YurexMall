@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+td,
+th {
+  @apply text-center p-2 border-2 md:p-4;
+}
+th {
+  @apply font-semibold text-gray-700 uppercase;
+}
+
+.active {
+  @apply shadow-blue-200 shadow-lg border-blue-200;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}

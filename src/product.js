@@ -2,8 +2,9 @@ fetch('https://fakestoreapi.com/products')
   .then((res) => res.json())
   .then((data) => {
     products = data;
-    dataReady();
     console.log('data refetched')
+    dataReady();
+
   });
 
 let products = [];

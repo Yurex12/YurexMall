@@ -6,6 +6,18 @@ td,
 th {
   @apply text-center p-2 border-2 md:p-4;
 }
+tr td:first-child,
+tr th:first-child {
+  @apply w-4/12 md:w-1/5;
+}
+tr td:nth-child(2),
+tr th:nth-child(2) {
+  @apply  md:w-4/12;
+}
+tr td,
+tr th {
+  @apply w-1/5;
+}
 th {
   @apply font-semibold text-gray-700 uppercase;
 }
@@ -14,6 +26,6 @@ th {
   @apply shadow-blue-200 shadow-lg border-blue-200;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }

@@ -81,16 +81,20 @@
         </td>
 
         <td>
-          <input
-            type="text"
-            value=""
-            class="border-2 border-gray-700 w-10 text-center rounded-md"
-            data-cart-item-quantity
-          />
+          <div class="flex items-center justify-center gap-x-2">
+            <button class="border ">-</button>
+            <input
+              type="text"
+              value=""
+              class="border-2 border-gray-700 w-10 text-center rounded-md"
+              data-cart-item-quantity
+            />
+            <button>+</button>
+          </div>
         </td>
         <td><span data-cart-item-price></span></td>
         <td>
-          <button data-cart-item-delete-btn onclick="removeItem(this)">
+          <button onclick="removeItem(this)">
             <i class="fa-solid fa-trash-can-arrow-up text-red-700"></i>
           </button>
         </td>

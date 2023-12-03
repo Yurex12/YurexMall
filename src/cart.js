@@ -1,19 +1,14 @@
-function dataReady() {
-  filterOutProducts();
-  // activateDeleteBtn();
-//  console.log('re called');
-}
 const cartItemTemplate = document.querySelector('[data-cart-item-template]');
 const cartItemsContainer = document.querySelector(
   '[data-cart-items-container]'
 );
 const cartItemTotalQuantity = document.querySelector('[data-total-cart-items]');
 
-function filterOutProducts() {
+function dispatchActions(){
   const items = dataBase[1].basket;
   const productData = products;
 
-  console.log(items)
+  console.log(items);
 
   //if (items.length === 0) return;
 
@@ -30,12 +25,12 @@ function filterOutProducts() {
 }
 
 function appendToCartContainer(cartItemProducts) {
-  cartItemsContainer.innerHTML = ''
-  if(cartItemProducts.length === 0) {
+  cartItemsContainer.innerHTML = '';
+  if (cartItemProducts.length === 0) {
     cartItemTotalQuantity.innerText = 0;
-    return
+    return;
   }
-  console.log(cartItemProducts)
+  console.log(cartItemProducts);
   cartItemProducts.forEach(
     ({ id, price, quantity, image, category, title }) => {
       const cartItemContainer =
@@ -55,9 +50,6 @@ function appendToCartContainer(cartItemProducts) {
       const cartItemPrice = cartItemContainer.querySelector(
         '[data-cart-item-price]'
       );
-      const deleteBtn = cartItemContainer.querySelector(
-        '[data-cart-item-delete-btn]'
-      );
 
       cartItemImage.src = image;
       cartItemCategory.innerText = category;
@@ -65,7 +57,6 @@ function appendToCartContainer(cartItemProducts) {
       cartItemQuantity.value = quantity;
       cartItemPrice.innerText = `$${price}`;
       cartItemContainer.setAttribute('id', id);
-      deleteBtn.setAttribute('id', id);
 
       cartItemsContainer.append(cartItemContainer);
     }
@@ -84,47 +75,14 @@ function totalQuantity(cartItemProducts) {
 
   cartItemTotalQuantity.innerText = totalQuantity;
 }
-/*
-function activateDeleteBtn() {
-  const deleteBtn = cartItemsContainer.querySelectorAll(
-    '[data-cart-item-delete-btn]'
+
+function removeItem(clickedBtn) {
+  const itemToBeDeletedId =
+    clickedBtn.parentElement.parentElement.getAttribute('id');
+  const newBasketItem = dataBase[1].basket.filter(
+    (item) => item.id !== itemToBeDeletedId
   );
-  deleteBtn.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const itemToBeDeletedId =
-        btn.parentElement.parentElement.getAttribute('id');
-
-      //   btn.parentElement.parentElement.remove()
-
-      //  const newBasketItem = dataBase[1].basket.filter((item) => item.id != itemToBeDeletedId);
-      //  dataBase[1].basket = newBasketItem;
-
-      // localStorage.setItem('dataBase', JSON.stringify(dataBase));
-      // filterOutProducts()
-
-      // console.log(itemToBeDeletedId, dataBase[1].basket)
-
-      const newBasketItem = dataBase[1].basket.filter(
-        (item) => item.id !== itemToBeDeletedId
-      );
-      //  console.log(newBasketItem)
-
-      //  const itemToBeDeleted = dataBase[1].basket.find((item) => +item.id === +itemToBeDeletedId);
-      //  console.log(itemToBeDeleted)
-      //  itemToBeDeleted.remove()
-      dataBase[1].basket = newBasketItem;
-      localStorage.setItem('dataBase', JSON.stringify(dataBase));
-
-      filterOutProducts();
-    });
-  });
-}*/
-
-function removeItem(data) {
-  const id = data.getAttribute('id');
-  const newBasketItem = dataBase[1].basket.filter((item) => item.id !== id);
   dataBase[1].basket = newBasketItem;
   localStorage.setItem('dataBase', JSON.stringify(dataBase));
-  console.log(id, dataBase[1].basket);
-  filterOutProducts();
+  dispatchActions()
 }

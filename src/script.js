@@ -1,11 +1,9 @@
-
 const itemContainer = document.querySelector('[data-item-container]');
 const itemTemplate = document.querySelector('[data-item-template]');
 const filter = document.getElementById('filter');
 const checkoutContainer = document.querySelector('#checkout-container');
-//let products = [];
 
-function dataReady() {
+function dispatchActions(){
   if (
     selectedOption !== null &&
     selectedOption !== '' &&

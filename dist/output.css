@@ -748,6 +748,15 @@ video {
   row-gap: 2.5rem;
 }
 
+.gap-y-4 {
+  row-gap: 1rem;
+}
+
+.gap-x-5 {
+  -moz-column-gap: 1.25rem;
+       column-gap: 1.25rem;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -1000,6 +1009,28 @@ th {
   }
 }
 
+tr td:first-child,
+tr th:first-child {
+  width: 33.333333%;
+}
+
+@media (min-width: 768px) {
+  tr td:first-child,
+tr th:first-child {
+    width: 20%;
+  }
+
+  tr td:nth-child(2),
+tr th:nth-child(2) {
+    width: 33.333333%;
+  }
+}
+
+tr td,
+tr th {
+  width: 20%;
+}
+
 th {
   font-weight: 600;
   text-transform: uppercase;
@@ -1017,7 +1048,7 @@ th {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
 

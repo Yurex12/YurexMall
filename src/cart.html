@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cart page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="../dist/output.css" />
+    <!-- <script src="product.js" defer></script>
+    <script src="cart.js" defer></script> -->
+  </head>
+  <body>
+    <header class="shadow-md fixed top-0 left-0 z-10 w-full">
+      <div class="w-11/12 mx-auto bg-white px-10 py-5 space-x-2">
+        <div class="flex items-center justify-between">
+          <a href="index.html" class="text-md font-bold"
+            >Yurex<span class="text-blue-500">Mall</span></a
+          >
+
+          <a href="cart.html" class="block relative">
+            <i class="fa-solid fa-cart-shopping text-3xl"></i>
+            <p
+              class="absolute -top-4 -right-2 bg-blue-500 p-1 text-white text-sm rounded-md"
+              data-cart-item
+            >
+              0
+            </p>
+          </a>
+        </div>
+        <!-- sort by -->
+
+        <div class="flex items-center justify-center">
+          <label class="text-blue-500 uppercase font-bold">sort by: </label>
+          <select
+            class="border-2 rounded-md px-2 py-1 ml-2 outline-none w-1/2 sm:w-48"
+            data-cart-sort
+          >
+            <option value="modified">Modified</option>
+            <option value="price-a-z">Price(High-Low)</option>
+            <option value="price-z-a">Price(Low-High)</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <section class="mt-36">
+      <div class="container mx-auto w-11/12">
+        <!-- loading animaton -->
+        <div data-loading-animation class="hidden">
+          <h1
+            class="h-8 w-52 rounded-sm skeleton mx-auto font-semibold text-center mb-4"
+          ></h1>
+          <button
+            class="mb-4 h-10 w-28 skeleton rounded-md font-semibold uppercase"
+            data-empty-btn
+          ></button>
+          <div>
+            <div
+              class="gap-y-16 flex flex-col lg:flex-row lg:gap-x-5 lg:gap-y-0"
+            >
+              <!-- table container -->
+              <div
+                class="h-96 py-4 bg-gray-100 flex flex-col items-center justify-around md:basis-3/5 md:h-[70vh] md:rounded-md"
+              >
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+              </div>
+              <!-- order summary -->
+              <div class="md:basis-2/5">
+                <div
+                  class="bg-gray-100 h-72 px-8 grow-0 py-8 mx-auto rounded-sm shadow-sm"
+                >
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="skeleton skeleton-text"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- order limits -->
+            <div class="my-10 space-y-5">
+              <div class="skeleton skeleton-text"></div>
+              <div class="skeleton skeleton-text"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- no item(s) in cart -->
+        <div class="hidden flex-col items-center" data-empty-page>
+          <img src="empty-cart.jpg" class="w-72" />
+          <!-- content -->
+          <div class="text-center space-y-4">
+            <h1 class="text-center text-2xl font-bold text-gray-500">
+              Your Cart is <span class="text-blue-500">Empty!</span>
+            </h1>
+            <p>
+              Before you procede to chechout, you must add some products to your
+              cart
+            </p>
+            <p>You will find a lot of amazing products on our "Shop" page</p>
+
+            <a
+              href="index.html"
+              class="border mb-4 px-4 py-2 bg-blue-500 text-white rounded-md font-semibold uppercase flex w-56 items-center mx-auto gap-x-3"
+            >
+              <i class="fa-solid fa-cart-shopping text-md"></i>
+              <span class="text-sm"> Return to shop page</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- cart details -->
+
+        <div  data-product-page>
+          <h1
+            class="text-xl font-semibold text-center text-gray-600 uppercase mb-4"
+          >
+            Shopping Cart
+          </h1>
+          <button
+            class="border mb-4 px-4 py-1 bg-blue-500 text-white rounded-md font-semibold uppercase"
+            data-empty-btn
+          >
+            Empty Cart
+          </button>
+          <div class="gap-y-16 flex flex-col lg:flex-row lg:gap-x-5 lg:gap-y-0">
+            <!-- table container -->
+            <div
+              class="border md:basis-3/5 md:h-[70vh] md:overflow-y-scroll md:border-2 md:border-blue-200 md:rounded-md"
+            >
+              <table class="w-full">
+                <thead class="md:sticky md:top-0 bg-gray-100">
+                  <tr>
+                    <th>Product</th>
+                    <th class="hidden md:table-cell">Description</th>
+                    <th>
+                      Quantity(<span
+                        class="text-blue-500"
+                        data-total-cart-items
+                      ></span
+                      >)
+                    </th>
+                    <th>Price</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody data-cart-items-container></tbody>
+              </table>
+            </div>
+            <!-- order summary -->
+            <div class="md:basis-2/5">
+              <div
+                class="bg-gray-100 px-8 grow-0 py-8 mx-auto rounded-sm shadow-sm"
+              >
+                <h2 class="font-semibold text-gray-700 text-xl">
+                  Order summary
+                </h2>
+
+                <!-- order table -->
+                <div class="my-4">
+                  <!-- subtotal -->
+                  <div
+                    class="flex items-center justify-between border-b-2 py-4"
+                  >
+                    <p class="text-gray-500">Subtotal</p>
+                    <p class="font-[400]">
+                      $<span class="subtotal" data-cart-subtotal></span>
+                    </p>
+                  </div>
+                  <!-- Shipping estimate -->
+                  <div
+                    class="flex items-center justify-between border-b-2 py-4"
+                  >
+                    <p class="text-gray-500">
+                      Shipping estimate <br />(5% of subtotal)
+                    </p>
+                    <p class="font-[400]">
+                      $<span data-shipping-estimate></span>
+                    </p>
+                  </div>
+                  <!-- Tax estimate -->
+                  <div
+                    class="flex items-center justify-between border-b-2 py-4"
+                  >
+                    <p class="text-gray-500">Task</p>
+                    <p class="font-[400]" data-tax>$<span>5.00</span></p>
+                  </div>
+                  <!-- order total -->
+                  <div class="flex items-center justify-between py-4">
+                    <p class="text-gray-700 font-semibold text-md">
+                      Order total
+                    </p>
+                    <p class="font-semibold text-md text-gray-700">
+                      $<span data-cart-total></span>
+                    </p>
+                  </div>
+                </div>
+
+                <!-- button -->
+                <button
+                  class="text-center text-white py-3 rounded-md text-lg w-full shadow-xl bg-blue-600 font-semibold hover:bg-blue-700"
+                >
+                  Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- order limits -->
+          <div class="my-5 p-2 space-y-5">
+            <div>
+              <h1 class="text-xl font-[600] text-gray-600">
+                Limits Of 30 Items Per Order
+              </h1>
+              <p>
+                Check that the item(s) in your cart are correct. Orders cannot
+                be changed or cancelled once placed. Please allow 2-3 business
+                days for processing before orders ship from our warehouse
+              </p>
+            </div>
+            <div>
+              <h1 class="text-xl font-[600] text-gray-600">SHIPPING RETURNS</h1>
+              <p>
+                WE OFFER 30-DAY, TRACKED RETURNS FOR A FEE OR SELF-POST RETURNS
+                FREE OF CHARGE.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <template data-cart-item-template>
+      <tr data-cart-item-container>
+        <td>
+          <div class="flex flex-col items-center">
+            <img src="" class="w-6" alt="" data-cart-item-image />
+            <p class="text-[12px] text-gray-800" data-cart-item-category></p>
+          </div>
+        </td>
+
+        <td class="hidden md:table-cell">
+          <p class="text-sm" data-cart-item-title></p>
+        </td>
+
+        <td>
+          <div class="flex justify-center items-center gap-x-2">
+            <button class="text-xl border px-1" onclick="decrement(this)">
+              -
+            </button>
+            <input
+              type="text"
+              value="20"
+              class="bg-gray-200 w-10 text-center rounded-md"
+              readonly
+              data-cart-item-quantity
+            />
+            <button class="text-xl border px-1" onclick="increment(this)">
+              +
+            </button>
+          </div>
+        </td>
+        <td><span data-cart-item-price></span></td>
+        <td>
+          <button onclick="removeItem(this)">
+            <i class="fa-solid fa-trash-can-arrow-up text-red-700"></i>
+          </button>
+        </td>
+      </tr>
+
+    </template>
+  </body>
+</html>

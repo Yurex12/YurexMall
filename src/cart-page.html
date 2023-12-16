@@ -33,37 +33,98 @@
             </p>
           </div>
         </div>
+
+        <!-- sort by -->
+
+        <div class="flex items-center justify-center">
+          <label class="text-blue-500 uppercase font-bold">sort by: </label>
+          <select
+            class="border-2 rounded-md px-2 py-1 ml-2 outline-none w-1/2 sm:w-48"
+            data-cart-sort
+          >
+            <option value="modified">Modified</option>
+            <option value="price-a-z">Price(High-Low)</option>
+            <option value="price-z-a">Price(Low-High)</option>
+          </select>
+        </div>
       </div>
     </header>
 
-    <section class="mt-24">
+    <section class="mt-32">
       <div class="container mx-auto">
-        <table class="w-11/12 mx-auto px-2">
-          <caption>
-            <h1
-              class="text-xl font-semibold md:text-3xl text-gray-800 uppercase mb-4"
-            >
-              Shopping Cart
-            </h1>
-          </caption>
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th class="hidden md:table-cell">Description</th>
-              <th>
-                Quantity(<span
-                  class="text-blue-500"
-                  data-total-cart-items
-                ></span
-                >)
-              </th>
-              <th>Price</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
+        <h1
+          class="text-xl font-semibold text-center text-gray-800 uppercase mb-4"
+        >
+          Shopping Cart
+        </h1>
 
-          <tbody data-cart-items-container></tbody>
-        </table>
+        <div
+          class="flex flex-col items-start mt-4 gap-y-12 md:flex-row md:px-3 md:gap-x-10 md:gap-y-0 border border-red-500"
+        >
+          <div
+            class="mx-auto lg:pb-2 md:overflow-y-scroll md:border-2 lg:border-4 md:basis-3/5 md:h-[75vh] border border-red-500"
+          >
+            <table class="mx-auto w-11/12">
+              <thead class="sticky top-0 left-0 md:bg-gray-100">
+                <tr>
+                  <th>Product</th>
+                  <th class="hidden md:table-cell">Description</th>
+                  <th>
+                    Quantity(<span
+                      class="text-blue-500"
+                      data-total-cart-items
+                    ></span
+                    >)
+                  </th>
+                  <th>Price</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+
+              <tbody data-cart-items-container></tbody>
+            </table>
+          </div>
+
+          <!-- order summary -->
+          <div
+            class="bg-gray-100 px-8 grow-0 py-8 w-11/12 mx-auto rounded-sm shadow-sm md:basis-2/5"
+          >
+            <h2 class="font-semibold text-gray-700 text-xl">Order summary</h2>
+
+            <!-- order table -->
+            <div class="my-4">
+              <!-- subtotal -->
+              <div class="flex items-center justify-between border-b-2 py-4">
+                <p class="text-gray-500">Subtotal</p>
+                <p class="font-[400]">$<span>99.00</span></p>
+              </div>
+              <!-- Shipping estimate -->
+              <div class="flex items-center justify-between border-b-2 py-4">
+                <p class="text-gray-500">Shipping estimate</p>
+                <p class="font-[400]">$<span>5.00</span></p>
+              </div>
+              <!-- Tax estimate -->
+              <div class="flex items-center justify-between border-b-2 py-4">
+                <p class="text-gray-500">Task</p>
+                <p class="font-[400]">$<span>8.32</span></p>
+              </div>
+              <!-- order total -->
+              <div class="flex items-center justify-between py-4">
+                <p class="text-gray-700 font-semibold text-md">Order total</p>
+                <p class="font-semibold text-md text-gray-700">
+                  $<span>112.32</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- button -->
+            <button
+              class="text-center text-white py-3 rounded-md text-lg w-full shadow-xl bg-blue-600 font-semibold hover:bg-blue-700"
+            >
+              Checkout
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -81,15 +142,20 @@
         </td>
 
         <td>
-          <div class="flex items-center justify-center gap-x-2">
-            <button class="border ">-</button>
+          <div class="flex justify-center items-center gap-x-2">
+            <button class="text-xl border px-1" onclick="decrement(this)">
+              -
+            </button>
             <input
               type="text"
               value=""
-              class="border-2 border-gray-700 w-10 text-center rounded-md"
+              class="bg-gray-200 w-10 text-center rounded-md"
+              readonly
               data-cart-item-quantity
             />
-            <button>+</button>
+            <button class="text-xl border px-1" onclick="increment(this)">
+              +
+            </button>
           </div>
         </td>
         <td><span data-cart-item-price></span></td>

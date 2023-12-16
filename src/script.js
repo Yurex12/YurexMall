@@ -1,26 +1,30 @@
-const itemContainer = document.querySelector('[data-item-container]');
-const itemTemplate = document.querySelector('[data-item-template]');
-const filter = document.getElementById('filter');
+const itemContainer = document.querySelector('[data-products-container]');
+const itemTemplate = document.querySelector('[data-product-template]');
+const filterCategory = document.querySelector('[data-filter-category]');
 const checkoutContainer = document.querySelector('#checkout-container');
+let itemInCart = document.querySelector('[data-cart-item]');
+let quantityvalue = document.querySelector('[data-product-quantity-value]');
 
-function dispatchActions(){
+const filterCategoryOption = dataBase[0].filter;
+
+//sets the value of the items in cart
+itemInCart.innerText = dataBase[1].basket.length;
+//checks local storege to check the filter state if there exists a value and acts accordinly
+function dispatchActions() {
   if (
-    selectedOption !== null &&
-    selectedOption !== '' &&
-    selectedOption !== 'all'
+    filterCategoryOption !== null &&
+    filterCategoryOption !== '' &&
+    filterCategoryOption !== 'all'
   ) {
-    filterItem(selectedOption);
+    filterProducts(filterCategoryOption);
   } else {
     appendToContainer(products);
   }
 }
 
-//select input
+//filters the products based on the user option
 
-const selectElement = document.getElementById('my-select');
-const selectedOption = dataBase[0].filter;
-
-function filterItem(filterValue) {
+function filterProducts(filterValue) {
   const filteredItem = products.filter(
     (product) => product.category === filterValue
   );
@@ -31,12 +35,9 @@ function filterItem(filterValue) {
   }
 }
 
-if (selectedOption !== null && selectedOption !== '') {
-  selectElement.value = selectedOption;
-}
-
-selectElement.addEventListener('change', (e) => {
-  let filterValue = e.target.value;
+// when the option is changed the products on the page gets filtered also based on the users option
+filterCategory.addEventListener('change', (e) => {
+  const filterValue = e.target.value;
   dataBase[0].filter = filterValue;
 
   switch (filterValue) {
@@ -44,180 +45,184 @@ selectElement.addEventListener('change', (e) => {
       appendToContainer(products);
       break;
     case "men's clothing":
-      filterItem(filterValue);
+      filterProducts(filterValue);
       break;
     case 'jewelery':
-      filterItem(filterValue);
+      filterProducts(filterValue);
       break;
     case 'electronics':
-      filterItem(filterValue);
+      filterProducts(filterValue);
       break;
     case "women's clothing":
-      filterItem(filterValue);
+      filterProducts(filterValue);
       break;
   }
 
   localStorage.setItem('dataBase', JSON.stringify(dataBase));
 });
 
-function appendToContainer(val) {
+//sets the filterCategory to the value from local storage, if there exists one when the pages is refreshed
+if (filterCategoryOption !== null && filterCategoryOption !== '') {
+  filterCategory.value = filterCategoryOption;
+}
+
+//appends the products to the its container respectively
+function appendToContainer(products) {
   itemContainer.innerHTML = '';
-  val.forEach(({ price, category, rating: { rate }, image, id, title }) => {
-    let search = dataBase[1].basket.find((item) => item.id == id);
-    const itemCard = itemTemplate.content.cloneNode(true).children[0];
-    const itemCategory = itemCard.querySelector('[data-category]');
-    const itemPrice = itemCard.querySelector('[data-price]');
-    const itemRating = itemCard.querySelector('[data-rating]');
-    const itemImage = itemCard.querySelector('[data-image]');
-    const itemBTn = itemCard.querySelector('[data-cart-btn]');
-    const itemTitle = itemCard.querySelector('[data-title]');
+  products.forEach(
+    ({ price, category, rating: { rate }, image, id, title }) => {
+      //checks for each item if the item id is in local storage and adds the remove icon if not undefined
+      const search = dataBase[1].basket.find((item) => Number(item.id) === id);
 
-    itemCategory.innerText = category;
-    itemTitle.innerText = title;
-    itemPrice.textContent = `$${price}`;
-    itemImage.src = image;
-    itemRating.innerText = `Rating: ${rate}`;
-    itemCard.setAttribute('id', id);
-    if (search !== undefined) {
-      itemBTn.children[0].classList.replace(
-        'fa-cart-plus',
-        'fa-trash-arrow-up'
-      );
-      itemBTn.classList.replace('bg-blue-500', 'bg-gray-300');
-      itemBTn.classList.replace('text-white', 'text-blue-600');
-    }
+      const itemCard = itemTemplate.content.cloneNode(true).children[0];
+      const itemCategory = itemCard.querySelector('[data-category]');
+      const itemPrice = itemCard.querySelector('[data-price]');
+      const itemRating = itemCard.querySelector('[data-rating]');
+      const itemImage = itemCard.querySelector('[data-image]');
+      const itemBtn = itemCard.querySelector('[data-cart-btn]');
+      const itemTitle = itemCard.querySelector('[data-title]');
 
-    itemContainer.append(itemCard);
-  });
-  cart();
-}
+      itemCategory.innerText = category;
+      itemTitle.innerText = title;
+      itemPrice.textContent = `$${price}`;
+      itemImage.src = image;
+      itemRating.innerText = `Rating: ${rate}`;
+      itemCard.setAttribute('id', id);
 
-//add to cart
-
-let itemInCart = document.querySelector('[data-cart-item]');
-
-let activeBtn;
-
-function cart() {
-  const cartBtn = itemContainer.querySelectorAll('[data-cart-btn]');
-  cartBtn.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      activeBtn = btn;
-      const btnIcon = btn.children[0];
-      const itemId = btn.parentElement.getAttribute('id');
-
-      if (btnIcon.classList.contains('fa-cart-plus')) {
-        btnIcon.classList.replace('fa-cart-plus', 'fa-trash-arrow-up');
-        btn.classList.replace('bg-blue-500', 'bg-gray-300');
-        btn.classList.replace('text-white', 'text-blue-600');
-
-        if (checkoutContainer.classList.contains('hidden')) {
-          checkoutContainer.classList.replace('hidden', 'flex');
-        }
-
-        checkoutContainer.setAttribute('id', itemId);
-
-        const selectedItem = dataBase[1].basket.find(
-          (item) => item.id === itemId
-        );
-
-        if (selectedItem === undefined) {
-          dataBase[1].basket.push({
-            id: itemId,
-            quantity: 1,
-          });
-        }
-
-        appendToCheckout(btn);
-        localStorage.setItem('dataBase', JSON.stringify(dataBase));
-
-        //  notification();
-      } else {
-        btnIcon.classList.replace('fa-trash-arrow-up', 'fa-cart-plus');
-        btn.classList.replace('bg-gray-300', 'bg-blue-500');
-        btn.classList.replace('text-blue-600', 'text-white');
-        btn.parentElement.classList.remove('active');
-        let checkoutContainerId = checkoutContainer.getAttribute('id');
-
-        if (checkoutContainerId === itemId) {
-          checkoutContainer.classList.replace('flex', 'hidden');
-        }
-
-        const newBasketItem = dataBase[1].basket.filter((item) => {
-          return item.id !== itemId;
-        });
-
-        dataBase[1].basket = newBasketItem;
-
-        localStorage.setItem('dataBase', JSON.stringify(dataBase));
-        //  notification(removed);
+      //add the styling to the btn and flips the icon if the condition is met
+      if (search !== undefined) {
+        const itemBtnIcon = itemBtn.children[0];
+        addBtnStyles(itemBtn, itemBtnIcon);
       }
-
-      itemInCart.innerText = dataBase[1].basket.length;
-    });
-  });
+      itemContainer.append(itemCard);
+    }
+  );
 }
 
-itemInCart.innerText = dataBase[1].basket.length;
+//Toggle Btn styles based on actions
 
-function appendToCheckout(btn) {
-  btn.parentElement.classList.add('active');
-  const itemToAppendPrice = btn.parentElement.children[3].children[0].innerText;
-  const itemToAppendSrc = btn.parentElement.children[1].src;
-  const itemQuantity = document.querySelector('[data-quantity-value]');
+let clickedBtnProperties = [];
 
-  const checkoutPrice = document.getElementById('checkout-price');
-  const checkoutImageSrc = document.getElementById('checkout-image');
+function productBtn(clickedBtn) {
+  const productId = clickedBtn.parentElement.getAttribute('id');
+  const clickedBtnIcon = clickedBtn.children[0];
+  const productPrice = clickedBtn.previousElementSibling.children[0].innerText;
+  const productSrc = clickedBtn.parentElement.children[1].src;
+  const activeProduct = clickedBtn.parentElement;
 
-  checkoutPrice.innerText = itemToAppendPrice;
-  checkoutImageSrc.src = itemToAppendSrc;
-  itemQuantity.innerText = 1;
-}
-
-//increment and decrement
-const incrementBtn = document.querySelector('[data-increment-btn]');
-const decrementBtn = document.querySelector('[data-decrement-btn]');
-let quantityvalue = document.querySelector('[data-quantity-value]');
-
-incrementBtn.addEventListener('click', () => {
-  const itemId = checkoutContainer.getAttribute('id');
-
-  const selectedItem = dataBase[1].basket.find((item) => item.id === itemId);
-
-  selectedItem.quantity++;
-  quantityvalue.innerText = selectedItem.quantity;
-  localStorage.setItem('dataBase', JSON.stringify(dataBase));
-});
-
-decrementBtn.addEventListener('click', () => {
-  let itemId = checkoutContainer.getAttribute('id');
-  let selectedItem = dataBase[1].basket.find((item) => item.id === itemId);
-
-  if (selectedItem === undefined) {
-    return;
-  } else if (selectedItem.quantity <= 1) {
-    let newBasketItem = dataBase[1].basket.filter((item) => {
-      return item.id !== itemId;
-    });
-
-    dataBase[1].basket = newBasketItem;
-    checkoutContainer.classList.replace('flex', 'hidden');
-    activeBtn.children[0].classList.replace(
-      'fa-trash-arrow-up',
-      'fa-cart-plus'
-    );
-    activeBtn.classList.replace('bg-gray-300', 'bg-blue-500');
-    activeBtn.classList.replace('text-blue-600', 'text-white');
-    activeBtn.parentElement.classList.remove('active');
-
-    itemInCart.innerText = dataBase[1].basket.length;
-    localStorage.setItem('dataBase', JSON.stringify(dataBase));
+  if (clickedBtnIcon.classList.contains('fa-cart-plus')) {
+    addBtnStyles(clickedBtn, clickedBtnIcon);
+    clickedBtnProperties = [productPrice, productSrc, activeProduct];
+    quantityvalue.textContent = 1;
+    pushToDataBase(productId);
   } else {
-    selectedItem.quantity--;
-    quantityvalue.innerText = selectedItem.quantity;
-    localStorage.setItem('dataBase', JSON.stringify(dataBase));
+    removeBtnStyles(clickedBtn, clickedBtnIcon);
+    popFromDataBase(productId);
   }
-});
+
+  itemInCart.innerText = dataBase[1].basket.length;
+}
+
+function pushToDataBase(productId) {
+  dataBase[1].basket.push({
+    id: productId,
+    quantity: 1,
+  });
+
+  localStorage.setItem('dataBase', JSON.stringify(dataBase));
+  appendToCheckoutContainer(clickedBtnProperties, productId);
+}
+
+function popFromDataBase(productId) {
+  const newBasketItem = dataBase[1].basket.filter(
+    (product) => product.id !== productId
+  );
+  dataBase[1].basket = newBasketItem;
+  localStorage.setItem('dataBase', JSON.stringify(dataBase));
+  removeFromCheckoutContainer(productId);
+}
+
+const checkoutPrice = document.querySelector('[data-checkout-price]');
+const checkoutImageSrc = document.querySelector('[data-checkout-image]');
+
+// the container class thats currently active;
+let ActiveProductContainer;
+
+function appendToCheckoutContainer(productProp, productId) {
+  ActiveProductContainer?.classList.remove('active-product');
+  const [productPrice, productSrc, productContainer] = productProp;
+  ActiveProductContainer = productContainer;
+  checkoutContainer.setAttribute('id', productId);
+
+  if (checkoutContainer.classList.contains('hidden')) {
+    checkoutContainer.classList.replace('hidden', 'flex');
+  }
+
+  checkoutPrice.innerText = productPrice;
+  checkoutImageSrc.src = productSrc;
+  productContainer.classList.add('active-product');
+}
+function removeFromCheckoutContainer(productId) {
+  const checkoutContainercurrentId = checkoutContainer.getAttribute('id');
+
+  if (checkoutContainercurrentId === productId) {
+    checkoutContainer.classList.replace('flex', 'hidden');
+    clickedBtnProperties = [];
+    checkoutContainer.removeAttribute('id');
+
+    ActiveProductContainer?.classList.remove('active-product');
+  }
+}
+
+//adds styling for each btn
+function removeBtnStyles(btn, btnIcon) {
+  btnIcon.classList.replace('fa-trash-arrow-up', 'fa-cart-plus');
+  btn.classList.replace('bg-gray-300', 'bg-blue-500');
+  btn.classList.replace('text-blue-600', 'text-white');
+}
+function addBtnStyles(btn, btnIcon) {
+  btnIcon.classList.replace('fa-cart-plus', 'fa-trash-arrow-up');
+  btn.classList.replace('bg-blue-500', 'bg-gray-300');
+  btn.classList.replace('text-white', 'text-blue-600');
+}
+
+function increment() {
+  const productId = checkoutContainer.getAttribute('id');
+
+  const selectedProduct = dataBase[1].basket.find(
+    (product) => +product.id === +productId
+  );
+
+  if (selectedProduct === undefined) return;
+
+  selectedProduct.quantity++;
+  quantityvalue.innerText = selectedProduct.quantity;
+  localStorage.setItem('dataBase', JSON.stringify(dataBase));
+}
+function decrement() {
+  const productId = checkoutContainer.getAttribute('id');
+
+  const selectedProduct = dataBase[1].basket.find(
+    (product) => +product.id === +productId
+  );
+
+  if (selectedProduct === undefined) return;
+
+  +selectedProduct.quantity--;
+  quantityvalue.innerText = selectedProduct.quantity;
+
+  if (selectedProduct.quantity < 1) {
+    popFromDataBase(productId);
+
+    const selectedProductBtnIcon =
+      ActiveProductContainer.children[4].children[0];
+    const selectedProductBtn = ActiveProductContainer.children[4];
+
+    removeBtnStyles(selectedProductBtn, selectedProductBtnIcon);
+    itemInCart.innerText = dataBase[1].basket.length;
+  }
+  localStorage.setItem('dataBase', JSON.stringify(dataBase));
+}
 
 // let messages = {
 //   added: 'Item sucessfully added to cart',

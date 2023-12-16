@@ -18,13 +18,13 @@
   </head>
   <body>
     <header class="shadow-md fixed top-0 left-0 z-10 w-full">
-      <div class="container mx-auto bg-white px-12 py-5">
+      <div class="w-11/12 mx-auto bg-white px-10 py-5 space-x-2">
         <div class="flex items-center justify-between">
           <a href="#" class="text-md font-bold"
             >Yurex<span class="text-blue-500">Mall</span></a
           >
 
-          <a href="cart-page.html" class="block relative">
+          <a href="cart.html" class="block relative">
             <i class="fa-solid fa-cart-shopping text-3xl"></i>
             <p
               class="absolute -top-4 -right-2 bg-blue-500 p-1 text-white text-sm rounded-md"
@@ -42,19 +42,14 @@
             >category:
           </label>
           <select
-            id="my-select"
-            name="filter"
             class="border-2 rounded-md px-2 py-1 ml-2 outline-none w-1/2 md:w-60"
+            data-filter-category
           >
-            <option value="all" id="all">All</option>
-            <option value="men's clothing" id="mens-clothing">
-              Men's clothing
-            </option>
-            <option value="jewelery" id="jewelery">Jewelery</option>
-            <option value="electronics" id="electronics">Electronics</option>
-            <option value="women's clothing" id="womens-clothing">
-              Women clothing
-            </option>
+            <option value="all">All</option>
+            <option value="men's clothing">Men's clothing</option>
+            <option value="jewelery">Jewelery</option>
+            <option value="electronics">Electronics</option>
+            <option value="women's clothing">Women clothing</option>
           </select>
         </div>
       </div>
@@ -63,15 +58,15 @@
     <!-- item container -->
 
     <section>
-      <div class="container mx-auto relative mt-36 mb-24">
+      <div class="container mx-auto relative mt-36 mb-24 px-4">
         <!-- notifications -->
         <!-- <div class="w-80 bg-white shadow-2xl rounded-md p-3 shadow-gray-900 flex items-center justify-between">
           <p class="font-semibold">Item sucessfully added to cart</p>
           <i class="fa-solid fa-xmark"></i>
         </div> -->
         <div
-          class="px-10 flex items-center flex-wrap gap-y-10 pb-10 justify-center md:gap-x-10"
-          data-item-container
+          class="flex items-center flex-wrap gap-y-12 pb-10 justify-center sm:gap-x-12"
+          data-products-container
         ></div>
       </div>
       <!-- checkout -->
@@ -87,8 +82,15 @@
             <span
               class="absolute -top-4 -right-5 bg-red-800 p-1 text-white text-[0.6rem] rounded-md"
               id="checkout-price"
+              data-checkout-price
             ></span>
-            <img src="" class="w- h-10" alt="" id="checkout-image" />
+            <img
+              src=""
+              class="w- h-10"
+              alt=""
+              id="checkout-image"
+              data-checkout-image
+            />
           </div>
 
           <!-- quantity -->
@@ -96,13 +98,15 @@
             <button
               class="text-xl px-3 rounded-md bg-red-400 text-white"
               data-decrement-btn
+              onclick="decrement(this)"
             >
               -
             </button>
-            <span class="text-xl" data-quantity-value>1</span>
+            <span class="text-xl" data-product-quantity-value>1</span>
             <button
               class="text-xl px-3 bg-green-400 rounded-md text-white"
               data-increment-btn
+              onclick="increment(this)"
             >
               +
             </button>
@@ -118,10 +122,12 @@
       </div>
     </section>
 
+    <div data-loading-animation></div>
+
     <!-- tempalte -->
-    <template data-item-template>
+    <template data-product-template>
       <div
-        class="w-72 bg-white rounded-md   border-2 scale-100 duration-[0.3s] px-6 py-5 hover:scale-105 hover:shadow-blue-200 hover:shadow-lg hover:border-blue-200"
+        class="w-72 bg-white rounded-md border-2 scale-100 duration-[0.3s] px-6 py-5 hover:scale-105 hover:shadow-blue-200 hover:shadow-lg hover:border-blue-200"
         data-item-card
       >
         <!-- category -->
@@ -144,6 +150,7 @@
         <button
           class="text-center w-full border border-blue-500 bg-blue-500 text-white p-1 rounded-md mt-2"
           data-cart-btn
+          onclick="productBtn(this)"
         >
           <i class="fa-solid fa-cart-plus text-2xl" id="btn-icon"></i>
         </button>

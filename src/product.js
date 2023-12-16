@@ -1,29 +1,32 @@
-/* fetch('https://fakestoreapi.com/products')
-   .then((res) => res.json())
-   .then((data) => {
-     products = data;
-     dataReady();
-   });*/
 let products = [];
+const dataLoadingAnimation = document.querySelector('[data-loading-animation]');
 
-processFetchedData()
+processFetchedData();
 
 async function fetchDataFromAPI() {
+  dataLoadingAnimation.classList.replace('hidden', 'block');
   const res = await fetch('https://fakestoreapi.com/products');
-  const data = await res.json()
+  const data = await res.json();
   return data;
 }
 
 async function processFetchedData() {
-  const data = await fetchDataFromAPI();
-  products = data
-  dispatchActions()
+  try {
+    const data = await fetchDataFromAPI();
+    console.log(data);
+    products = data;
+
+    dispatchActions();
+  } catch (error) {
+   // alert(error.message);
+   console.log(error)
+  } finally {
+    dataLoadingAnimation.classList.replace('block', 'hidden');
+  }
 }
-
-
-
 
 let dataBase = JSON.parse(localStorage.getItem('dataBase')) || [
   { filter: '' },
   { basket: [] },
+  { sortBy: '' },
 ];

@@ -12,8 +12,8 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="../dist/output.css" />
-    <!-- <script src="product.js" defer></script>
-    <script src="cart.js" defer></script> -->
+    <script src="product.js" defer></script>
+    <script src="cart.js" defer></script>
   </head>
   <body>
     <header class="shadow-md fixed top-0 left-0 z-10 w-full">
@@ -97,8 +97,8 @@
         </div>
 
         <!-- no item(s) in cart -->
-        <div class="hidden flex-col items-center" data-empty-page>
-          <img src="empty-cart.jpg" class="w-72" />
+        <div class=" flex-col items-center hidden" data-empty-page>
+          <img src="empty-cart.jpg" class="w-72 mx-auto object-cover" />
           <!-- content -->
           <div class="text-center space-y-4">
             <h1 class="text-center text-2xl font-bold text-gray-500">
@@ -122,7 +122,7 @@
 
         <!-- cart details -->
 
-        <div  data-product-page>
+        <div data-product-page>
           <h1
             class="text-xl font-semibold text-center text-gray-600 uppercase mb-4"
           >

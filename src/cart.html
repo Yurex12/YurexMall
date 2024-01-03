@@ -16,8 +16,8 @@
     <script src="cart.js" defer></script>
   </head>
   <body>
-    <header class="shadow-md fixed top-0 left-0 z-10 w-full">
-      <div class="w-11/12 mx-auto bg-white px-10 py-5 space-x-2">
+    <header class="shadow-md fixed bg-white top-0 left-0 z-10 w-full">
+      <div class="w-11/12 mx-auto px-10 py-5 space-y-2">
         <div class="flex items-center justify-between">
           <a href="index.html" class="text-md font-bold"
             >Yurex<span class="text-blue-500">Mall</span></a
@@ -38,7 +38,7 @@
         <div class="flex items-center justify-center">
           <label class="text-blue-500 uppercase font-bold">sort by: </label>
           <select
-            class="border-2 rounded-md px-2 py-1 ml-2 outline-none w-1/2 sm:w-48"
+            class="border-2 rounded-md px-2 py-1 ml-2 outline-none sm:w-48"
             data-cart-sort
           >
             <option value="modified">Modified</option>
@@ -49,116 +49,46 @@
       </div>
     </header>
 
-    <section class="mt-36">
-      <div class="container mx-auto w-11/12">
-        <!-- loading animaton -->
-        <div data-loading-animation class="hidden">
-          <h1
-            class="h-8 w-52 rounded-sm skeleton mx-auto font-semibold text-center mb-4"
-          ></h1>
-          <button
-            class="mb-4 h-10 w-28 skeleton rounded-md font-semibold uppercase"
-            data-empty-btn
-          ></button>
+    <section class="mt-28 border-red-500">
+      <div class="container w-11/12 mx-auto">
+        <!-- product page -->
+
+        <div>
           <div>
-            <div
-              class="gap-y-16 flex flex-col lg:flex-row lg:gap-x-5 lg:gap-y-0"
+            <h1
+              class="text-xl font-semibold text-center text-gray-600 uppercase mb-4"
             >
-              <!-- table container -->
-              <div
-                class="h-96 py-4 bg-gray-100 flex flex-col items-center justify-around md:basis-3/5 md:h-[70vh] md:rounded-md"
-              >
-                <div class="skeleton skeleton-text"></div>
-                <div class="skeleton skeleton-text"></div>
-                <div class="skeleton skeleton-text"></div>
-                <div class="skeleton skeleton-text"></div>
-                <div class="skeleton skeleton-text"></div>
-                <div class="skeleton skeleton-text"></div>
-              </div>
-              <!-- order summary -->
-              <div class="md:basis-2/5">
-                <div
-                  class="bg-gray-100 h-72 px-8 grow-0 py-8 mx-auto rounded-sm shadow-sm"
-                >
-                  <div class="skeleton skeleton-text"></div>
-                  <div class="skeleton skeleton-text"></div>
-                  <div class="skeleton skeleton-text"></div>
-                  <div class="skeleton skeleton-text"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- order limits -->
-            <div class="my-10 space-y-5">
-              <div class="skeleton skeleton-text"></div>
-              <div class="skeleton skeleton-text"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- no item(s) in cart -->
-        <div class=" flex-col items-center hidden" data-empty-page>
-          <img src="empty-cart.jpg" class="w-72 mx-auto object-cover" />
-          <!-- content -->
-          <div class="text-center space-y-4">
-            <h1 class="text-center text-2xl font-bold text-gray-500">
-              Your Cart is <span class="text-blue-500">Empty!</span>
+              Shopping Cart
             </h1>
-            <p>
-              Before you procede to chechout, you must add some products to your
-              cart
-            </p>
-            <p>You will find a lot of amazing products on our "Shop" page</p>
-
-            <a
-              href="index.html"
-              class="border mb-4 px-4 py-2 bg-blue-500 text-white rounded-md font-semibold uppercase flex w-56 items-center mx-auto gap-x-3"
+            <button
+              class="border mb-4 px-4 py-1 bg-blue-500 text-white rounded-md font-semibold uppercase"
+              onclick="emptyCart()"
             >
-              <i class="fa-solid fa-cart-shopping text-md"></i>
-              <span class="text-sm"> Return to shop page</span>
-            </a>
+              Empty Cart
+            </button>
           </div>
-        </div>
-
-        <!-- cart details -->
-
-        <div data-product-page>
-          <h1
-            class="text-xl font-semibold text-center text-gray-600 uppercase mb-4"
-          >
-            Shopping Cart
-          </h1>
-          <button
-            class="border mb-4 px-4 py-1 bg-blue-500 text-white rounded-md font-semibold uppercase"
-            data-empty-btn
-          >
-            Empty Cart
-          </button>
-          <div class="gap-y-16 flex flex-col lg:flex-row lg:gap-x-5 lg:gap-y-0">
-            <!-- table container -->
+          <!-- table -->
+          <div class="gap-y-5 flex flex-col lg:flex-row lg:gap-x-5 lg:gap-y-0">
             <div
-              class="border md:basis-3/5 md:h-[70vh] md:overflow-y-scroll md:border-2 md:border-blue-200 md:rounded-md"
+              class="border font-semibold text-[10px] md:text-sm md:basis-3/5 md:h-[70vh] md:overflow-y-scroll md:border-2 md:border-blue-200 md:rounded-md"
             >
               <table class="w-full">
                 <thead class="md:sticky md:top-0 bg-gray-100">
-                  <tr>
-                    <th>Product</th>
-                    <th class="hidden md:table-cell">Description</th>
-                    <th>
-                      Quantity(<span
-                        class="text-blue-500"
-                        data-total-cart-items
-                      ></span
-                      >)
-                    </th>
-                    <th>Price</th>
-                    <th>Delete</th>
+                  <tr
+                    class="grid grid-cols-[1.5fr_1.8fr_1fr_0.5fr] md:grid-cols-[1.5fr_2fr_1.5fr_1fr_0.5fr]"
+                  >
+                    <td>Product</td>
+                    <td class="hidden md:table-cell">Description</td>
+                    <td>Quantity(20)</td>
+                    <td>Price($)</td>
+                    <td>Del</td>
                   </tr>
                 </thead>
+
                 <tbody data-cart-items-container></tbody>
               </table>
             </div>
-            <!-- order summary -->
+
             <div class="md:basis-2/5">
               <div
                 class="bg-gray-100 px-8 grow-0 py-8 mx-auto rounded-sm shadow-sm"
@@ -218,11 +148,9 @@
           </div>
 
           <!-- order limits -->
-          <div class="my-5 p-2 space-y-5">
-            <div>
-              <h1 class="text-xl font-[600] text-gray-600">
-                Limits Of 30 Items Per Order
-              </h1>
+          <div class="my-5 px-4 space-y-4">
+            <div class="">
+              <h1 class="text-lg font-[600] text-gray-600">Attention</h1>
               <p>
                 Check that the item(s) in your cart are correct. Orders cannot
                 be changed or cancelled once placed. Please allow 2-3 business
@@ -230,10 +158,10 @@
               </p>
             </div>
             <div>
-              <h1 class="text-xl font-[600] text-gray-600">SHIPPING RETURNS</h1>
+              <h1 class="text-lg font-[600] text-gray-600">Shipping Returns</h1>
               <p>
-                WE OFFER 30-DAY, TRACKED RETURNS FOR A FEE OR SELF-POST RETURNS
-                FREE OF CHARGE.
+                we offer 30-day, tracked returns for a fee or self-post returns
+                free of charge.
               </p>
             </div>
           </div>
@@ -241,17 +169,40 @@
       </div>
     </section>
 
-    <template data-cart-item-template>
-      <tr data-cart-item-container>
+    <footer class="bg-blue-700 py-5">
+      <div class="container mx-auto">
+        <p class="text-white text-center">&copy; Yurexmall@<span>2024</span></p>
+        <p class="text-white text-center">All rights reserved</p>
+      </div>
+    </footer>
+
+    <!-- error -->
+
+    <div
+      class="inset-0 hidden text-white flex-col items-center justify-center bg-slate-700 h-[100dvh] overflow-hidden w-screen z-50"
+      data-error-page
+    >
+      <h1 class="text-xl">Something went wrong😌</h1>
+      <p class="text-center w-10/12"></p>
+    </div>
+
+    <template>
+      <tr
+        class="grid grid-cols-[1.5fr_1.8fr_1fr_0.5fr] items-center justify-center md:grid-cols-[1.5fr_2fr_1.5fr_1fr_0.5fr]"
+        data-cart-item-container
+      >
         <td>
           <div class="flex flex-col items-center">
-            <img src="" class="w-6" alt="" data-cart-item-image />
-            <p class="text-[12px] text-gray-800" data-cart-item-category></p>
+            <img src="../demo.jpg" class="w-6" alt="" data-cart-item-image />
+            <p data-cart-item-category>Women's clothing</p>
           </div>
         </td>
 
         <td class="hidden md:table-cell">
-          <p class="text-sm" data-cart-item-title></p>
+          <p data-cart-item-title>
+            John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain
+            Bracelet
+          </p>
         </td>
 
         <td>
@@ -271,14 +222,13 @@
             </button>
           </div>
         </td>
-        <td><span data-cart-item-price></span></td>
+        <td><span data-cart-item-price>100</span></td>
         <td>
           <button onclick="removeItem(this)">
             <i class="fa-solid fa-trash-can-arrow-up text-red-700"></i>
           </button>
         </td>
       </tr>
-
     </template>
   </body>
 </html>

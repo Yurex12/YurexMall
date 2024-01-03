@@ -66,6 +66,11 @@ if (filterCategoryOption !== null && filterCategoryOption !== '') {
   filterCategory.value = filterCategoryOption;
 }
 
+for (let i = 0; i < 10; i++) {
+  let loadingAnimationCard = itemTemplate.content.cloneNode(true).children[1];
+  itemContainer.append(loadingAnimationCard);
+}
+
 //appends the products to the its container respectively
 function appendToContainer(products) {
   itemContainer.innerHTML = '';

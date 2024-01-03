@@ -2,64 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply text-sm text-gray-500;
+}
 
 body::-webkit-scrollbar {
-  display: none;
+  @apply hidden;
 }
 
 td,
 th {
-  @apply text-center p-2 border-2 sm:p-4;
-}
-
-tr td,
-tr th {
-  @apply w-1/5 sm:w-auto;
-}
-
-tr td:first-child,
-tr th:first-child {
-  @apply w-4/12 sm:w-1/5;
-}
-tr td:nth-child(2),
-tr th:nth-child(2) {
-  @apply sm:w-4/12;
-}
-
-th {
-  @apply font-semibold text-gray-700  text-sm;
+  @apply text-center  py-2  sm:p-4;
 }
 
 .active-product {
   @apply shadow-blue-200 shadow-lg border-blue-200;
 }
 
-
 .skeleton {
   animation: skeleton-loading 1s linear infinite alternate;
- }
- 
- .skeleton-text {
+}
+
+.skeleton-text {
   width: 95%;
   height: 3rem;
- 
-  border-radius: .25rem;
+
+  border-radius: 0.25rem;
   margin: 0 auto;
-  margin-bottom: .5rem;
- }
- 
- /* .skeleton-text:last-child {
-  margin-bottom: 0;
-  width: 80%;
- } */
- 
- @keyframes skeleton-loading {
+  margin-bottom: 0.5rem;
+}
+
+@keyframes skeleton-loading {
   0% {
     @apply bg-gray-50;
   }
- 
+
   100% {
     @apply bg-gray-200;
   }
- }
-
+}

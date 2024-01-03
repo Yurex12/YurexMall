@@ -17,8 +17,8 @@
     <title>Shopping cart</title>
   </head>
   <body>
-    <header class="shadow-md fixed top-0 left-0 z-10 w-full">
-      <div class="w-11/12 mx-auto bg-white px-10 py-5 space-x-2">
+    <header class="shadow-md fixed top-0 left-0 z-10 w-full bg-white">
+      <div class="w-11/12 mx-auto px-10 py-5 space-y-2">
         <div class="flex items-center justify-between">
           <a href="#" class="text-md font-bold"
             >Yurex<span class="text-blue-500">Mall</span></a
@@ -42,7 +42,7 @@
             >category:
           </label>
           <select
-            class="border-2 rounded-md px-2 py-1 ml-2 outline-none w-1/2 md:w-60"
+            class="border-2 rounded-md px-2 py-1 ml-2 outline-none w-full md:w-60"
             data-filter-category
           >
             <option value="all">All</option>
@@ -112,17 +112,16 @@
             </button>
           </div>
 
-          <button
+          <a
+            href="cart.html"
             class="bg-blue-500 px-5 py-2 rounded-lg text-white flex items-center justify-center gap-x-2"
           >
             <span class="text-sm">Checkout</span>
             <i class="fa-solid fa-arrow-right text-sm mt-[2px]"></i>
-          </button>
+          </a>
         </div>
       </div>
     </section>
-
-    <div data-loading-animation></div>
 
     <!-- tempalte -->
     <template data-product-template>
@@ -155,6 +154,34 @@
           <i class="fa-solid fa-cart-plus text-2xl" id="btn-icon"></i>
         </button>
       </div>
+
+      loading animation
+      <div class="w-72 shadow-lg rounded-2xl px-6 py-8">
+        <!-- image -->
+        <div class="h-52 mx-auto rounded-2xl shadow-sm skeleton"></div>
+        <!-- content -->
+        <div class="p-2 mt-3 space-y-2">
+          <p class="skeleton h-5"></p>
+          <p class="skeleton h-5"></p>
+        </div>
+      </div>
     </template>
+
+    <!-- error -->
+
+    <div
+      class="inset-0 hidden text-white flex-col items-center justify-center bg-slate-700 h-[100dvh] overflow-hidden w-screen z-50"
+      data-error-page
+    >
+      <h1 class="text-xl">Something went wrong😌</h1>
+      <p class="text-center w-10/12"></p>
+    </div>
+
+    <footer class="bg-blue-700 py-5">
+      <div class="container mx-auto">
+        <p class="text-white text-center">&copy; Yurexmall@<span>2024</span></p>
+        <p class="text-white text-center">All rights reserved</p>
+      </div>
+    </footer>
   </body>
 </html>

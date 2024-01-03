@@ -4,6 +4,7 @@ const cartItemsContainer = document.querySelector(
 );
 let itemInCart = document.querySelector('[data-cart-item]');
 const cartItemTotalQuantity = document.querySelector('[data-total-cart-items]');
+const loadingAnimation = document.querySelector('[data-loading-animation]');
 
 //sets the value of the items in cart
 itemInCart.innerText = dataBase[1].basket.length;
@@ -15,6 +16,8 @@ const sortByOption = dataBase[2].sortBy;
 
 //first action
 function dispatchActions() {
+  console.log('name')
+ // loadingAnimation.classList.add('hidden');
   if (emptyOrNot()) return;
 
   if (sortByOption !== null && sortByOption !== '') {
@@ -165,14 +168,13 @@ const productPage = document.querySelector('[data-product-page]');
 const emptyPage = document.querySelector('[data-empty-page]');
 
 function emptyOrNot() {
- // if (Number(dataBase[1].basket.length) === undefined) return
-  if (Number(dataBase[1].basket.length) === 0) {
+  if (!Number(dataBase[1].basket.length)) {
     productPage.classList.replace('block', 'hidden');
     emptyPage.classList.replace('hidden', 'flex');
     return true;
   } else {
-    productPage.classList.replace('hidden', 'block');
-    emptyPage.classList.replace('flex', 'hidden');
+  //  productPage.classList.replace('hidden', 'block');
+  //  emptyPage.classList.replace('flex', 'hidden');
     return false;
   }
 }
@@ -235,10 +237,6 @@ function decrement(btn) {
 }
 
 //empty cart
-
-const emptyCartBtn = document.querySelector('[data-empty-btn]');
-
-emptyCartBtn.addEventListener('click', emptyCart);
 
 function emptyCart() {
   let confirm = window.confirm('are you sure you want to empty your cart');
